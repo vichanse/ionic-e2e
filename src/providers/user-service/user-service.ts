@@ -14,6 +14,8 @@ export class UserServiceProvider {
 
   items: FirebaseListObservable<any>;
 
+  success: boolean;
+
   constructor(
     private afAuth: AngularFireAuth, 
     public alertCtrl: AlertController,
@@ -82,6 +84,48 @@ export class UserServiceProvider {
     })
 
     return this.storageControl('get', user);
+  }
+
+  updateUser(theUser, theUserData) {
+    let newData = {
+      creation: theUserData.creation,
+      logins: theUserData.logins + 1,
+      rewardCount: theUserData.rewardCount,
+      lastLogin: new Date().toLocaleString(),
+      id: theUserData.id
+    }
+
+    this.items.update(newData.id, {
+      logins: newData.logins,
+      rewardCount: newData.rewardCount,
+      lastLogin: newData.lastLogin
+    });
+
+    return this.storageControl('set', theUser, newData);
+  }
+
+  logon(user, password) {
+    return this.afAuth.auth.signInWithEmailAndPassword(user, password)
+      .then(result => {
+        this.storageControl('get', user)
+          .then( returned => {
+            if (!returned) {
+              this.saveNewUser(user)
+              .then(res => this.displayAlert(user, 'New account saved for this user'));
+            } else {
+              this.updateUser(user, returned)
+              .then(updated => console.log(user, updated))
+            }
+          })
+
+          this.success = true;
+          return result;
+      })
+      .catch(err => {
+        this.success = false;
+        this.displayAlert('Error logging in', err);
+        return err;
+      });
   }
 
 }
