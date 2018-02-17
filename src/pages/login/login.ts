@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { HomePage } from '../home/home';
+import { UserServiceProvider } from "../../providers/user-service/user-service";
+
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -17,12 +21,37 @@ export class LoginPage {
 
   regPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  login = {
+    email: '',
+    password: ''
+  };
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private userService: UserServiceProvider
+  ) {
     this.regPage = 'RegisterPage';
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  signOn() {
+    if (!this.login.email || !this.login.password) {
+      this.userService.displayAlert('Error!', "You must enter email and password");
+    } else {
+      this.userService.logon(this.login.email, this.login.password)
+        .then( returned => {
+          if (this.userService.success ) {
+            this.navCtrl.push(HomePage);
+          } else {
+            this.login.email = '';
+            this.login.password = '';
+          }
+        })
+    }
   }
 
 }

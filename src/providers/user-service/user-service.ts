@@ -104,7 +104,7 @@ export class UserServiceProvider {
     return this.storageControl('set', theUser, newData);
   }
 
-  logon(user, password) {
+  logOn(user, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(user, password)
       .then(result => {
         this.storageControl('get', user)
