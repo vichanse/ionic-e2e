@@ -6,13 +6,14 @@ import * as firebase from 'firebase/app';
 import { AlertController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+
 
 
 @Injectable()
 export class UserServiceProvider {
 
-  items: FirebaseListObservable<any>;
+  items: AngularFireList<any>;
 
   success: boolean;
 
