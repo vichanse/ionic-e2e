@@ -42,7 +42,7 @@ export class LoginPage {
     if (!this.login.email || !this.login.password) {
       this.userService.displayAlert('Error!', "You must enter email and password");
     } else {
-      this.userService.logon(this.login.email, this.login.password)
+      this.userService.logOn(this.login.email, this.login.password)
         .then( returned => {
           if (this.userService.success ) {
             this.navCtrl.push(HomePage);
