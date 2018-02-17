@@ -5,6 +5,7 @@ import { NavController } from 'ionic-angular';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   menuData = [
     { title: 'Our Menu', pic:'assets/img/soup1.jpg', pushPage: 'MenuPage'},
@@ -13,8 +14,10 @@ export class HomePage {
     { title: 'Locations', pic:'assets/img/cafe2.jpg', pushPage: 'LocationsPage'},
   ];
 
-  constructor(public navCtrl: NavController) {
+  logPage: any;
 
+  constructor(public navCtrl: NavController) {
+    this.logPage = 'LoginPage';
   }
 
 }
