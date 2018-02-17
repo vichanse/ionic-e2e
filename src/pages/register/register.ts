@@ -53,7 +53,7 @@ export class RegisterPage {
   }
 
   regSuccess(result) {
-    this.displayAlert(result.email, 'Account creater for this email address');
+    this.displayAlert(result.email, 'Account created for this email address');
     this.afAuth.auth.signInWithEmailAndPassword(this.reg.email, this.reg.passWrd1)
       .then(res => this.navCtrl.push(HomePage))
       .catch(err => this.displayAlert('Error!', err));
