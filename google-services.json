@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "952708302087",
+    "firebase_url": "https://wired-coffee-614a1.firebaseio.com",
+    "project_id": "wired-coffee-614a1",
+    "storage_bucket": "wired-coffee-614a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952708302087:android:e10519f06766a5bd",
+        "android_client_info": {
+          "package_name": "com.wiredbrain.vichanse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952708302087-rbcvnn39vncevhb5o8i47j84g5sh2j5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6N6STwfrkxAG9o-SWPr8-UxVqF7eyvrU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
