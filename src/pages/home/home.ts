@@ -5,7 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UserServiceProvider } from "../../providers/user-service/user-service";
 
-import { FCM } from '@ionic-native/fcm';
+//import { FCM } from '@ionic-native/fcm';
 
 @Component({
   selector: 'page-home',
@@ -24,8 +24,8 @@ export class HomePage implements OnInit {
   loggedIn: any;
 
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth,
-              private userService: UserServiceProvider,
-              private fcm: FCM
+              private userService: UserServiceProvider
+              //private fcm: FCM
             ) {
     
   }
@@ -38,7 +38,8 @@ export class HomePage implements OnInit {
         this.loggedIn = this.userService.user = user.email;
       }
     })
-    this.initFCM();
+    
+    //this.initFCM();
   }
 
   signOff() {
@@ -55,7 +56,7 @@ export class HomePage implements OnInit {
     })
   }
 
-  initFCM() {
+  /*initFCM() {
     this.fcm.onNotification().subscribe( data => {
       if(data.wasTapped) {
         console.log(data);
@@ -65,6 +66,6 @@ export class HomePage implements OnInit {
         this.userService.displayAlert('Sent', data);
       }
     })
-  }
+  }*/
 
 }
