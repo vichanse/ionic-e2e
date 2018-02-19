@@ -4,11 +4,13 @@ import 'rxjs/add/operator/map';
 import Promise from 'promise-polyfill';
 
 import { Storage } from '@ionic/storage';
+import { ModalController } from "ionic-angular";
+import { RewardModalPage } from "../../pages/reward-modal/reward-modal";
 
 @Injectable()
 export class RewardServiceProvider {
 
-  constructor( private storage: Storage) {
+  constructor( private storage: Storage, public modalCtrl: ModalController) {
     console.log('Hello RewardServiceProvider Provider');
   }
 
@@ -66,14 +68,19 @@ export class RewardServiceProvider {
       if (!returned) {
         this.rewards.push(rewardObj);
         this.storage.set(`${user}-rewards`, this.rewards)
-        .then(res => console.log(user, `Awarded ${rewarded}`));
+        .then(res => this.displayReward(rewarded));
       } else {
         this.rewards = returned;
         this.rewards.push(rewardObj);
         this.storage.set(`${user}-rewards`, this.rewards)
-        .then(res => console.log(user, `Awarded ${rewarded}`));
+        .then(res => this.displayReward(rewarded));
       }
     })
+  }
+
+  displayReward( amount ) {
+    let theModal = this.modalCtrl.create(RewardModalPage, { 'rewardParam': amount});
+    theModal.present();
   }
 
 }

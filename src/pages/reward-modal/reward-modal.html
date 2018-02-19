@@ -1,0 +1,30 @@
+
+<ion-header>
+
+  <ion-navbar color="danger">
+    <ion-title>Congratulations</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <img src="assets/img/reward.jpg">
+  </ion-card>
+
+  <div class="text-align">
+    <p class="text-formet">You have generated a reward of </p>
+    <p class="text-formet">{{displayParam | currency:'EUR':true}}</p>
+    <p class="text-formet">You can use these savings on your next order</p>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="danger">
+    <button ion-button clear (click)="dismiss()">Close</button>
+  </ion-toolbar>
+
+</ion-footer>

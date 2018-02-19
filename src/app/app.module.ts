@@ -13,6 +13,9 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { RewardServiceProvider } from '../providers/reward-service/reward-service';
+import { RewardModalPageModule } from "../pages/reward-modal/reward-modal.module";
+
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCWhlZGS5W1UuC6VV0mQzQJeYqYugfE4FE",
@@ -35,6 +38,7 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     IonicStorageModule.forRoot(),
+    RewardModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
