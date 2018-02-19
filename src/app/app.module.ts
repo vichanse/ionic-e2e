@@ -12,6 +12,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { RewardServiceProvider } from '../providers/reward-service/reward-service';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCWhlZGS5W1UuC6VV0mQzQJeYqYugfE4FE",
@@ -44,7 +45,8 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserServiceProvider
+    UserServiceProvider,
+    RewardServiceProvider
   ]
 })
 export class AppModule {}
