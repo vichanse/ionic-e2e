@@ -15,6 +15,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { RewardServiceProvider } from '../providers/reward-service/reward-service';
 import { RewardModalPageModule } from "../pages/reward-modal/reward-modal.module";
 import { MenuServiceProvider } from '../providers/menu-service/menu-service';
+import { CartServiceProvider } from '../providers/cart-service/cart-service';
 
 //import { FCM } from '@ionic-native/fcm';
 
@@ -52,7 +53,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
     RewardServiceProvider,
-    MenuServiceProvider
+    MenuServiceProvider,
+    CartServiceProvider
   ]
 })
 export class AppModule {}

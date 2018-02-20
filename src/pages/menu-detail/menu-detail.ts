@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MenuServiceProvider } from "../../providers/menu-service/menu-service";
+import { CartServiceProvider } from "../../providers/cart-service/cart-service";
+import { UserServiceProvider } from "../../providers/user-service/user-service";
 
 
 @IonicPage()
@@ -22,11 +24,14 @@ export class MenuDetailPage implements OnInit {
     price: 0,
     milk: 'none',
     whip: 'none',
+    orderId: '',
   }
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private menuList: MenuServiceProvider
+    private menuList: MenuServiceProvider,
+    private cartService: CartServiceProvider,
+    private userService: UserServiceProvider
   ) {
   }
 
@@ -45,15 +50,21 @@ export class MenuDetailPage implements OnInit {
   }
 
   addToCart() {
-    if ( this.theCoffee.price == this.theCoffee.small ) {
-      this.theCoffee.size = 'small';
-    } else if ( this.theCoffee.price == this.theCoffee.medium ) {
-      this.theCoffee.size = 'medium';
-    } else {
-      this.theCoffee.size = 'large';
+    if(this.userService.success) {
+      if ( this.theCoffee.price == this.theCoffee.small ) {
+        this.theCoffee.size = 'small';
+      } else if ( this.theCoffee.price == this.theCoffee.medium ) {
+        this.theCoffee.size = 'medium';
+      } else {
+        this.theCoffee.size = 'large';
+      }
+      this.theCoffee.price = Number(this.theCoffee.price);
+      this.theCoffee.orderId = `${this.theCoffee.id}-${this.theCoffee.price}`;
+      this.cartService.addItem(this.theCoffee);
+      this.userService.displayAlert(`${this.theCoffee.size} ${this.theCoffee.name}`, 'Added to cart')
+      
     }
-
-    console.log('clicked', this.theCoffee)
+    
   }
 
 }
