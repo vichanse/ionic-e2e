@@ -22,8 +22,8 @@ export class MenuDetailPage implements OnInit {
     large: 0,
     size: '',
     price: 0,
-    milk: 'none',
-    whip: 'none',
+    milk: 'no',
+    whip: 'no',
     orderId: '',
   }
   constructor(
@@ -45,8 +45,19 @@ export class MenuDetailPage implements OnInit {
       .then(ret => this.initObject(ret));
   }
   
-  initObject(myData) {
+  /*initObject(myData) {
     this.theCoffee = Object.assign(this.theCoffee, myData);
+  }*/
+
+  initObject(myData){
+    this.theCoffee.id = myData.id;
+    this.theCoffee.name = myData.name;
+    this.theCoffee.description = myData.description;
+    this.theCoffee.img = myData.img;
+    this.theCoffee.small = myData.small;
+    this.theCoffee.medium = myData.medium;
+    this.theCoffee.large = myData.large;
+    this.theCoffee.price = myData.small;
   }
 
   addToCart() {
@@ -63,6 +74,8 @@ export class MenuDetailPage implements OnInit {
       this.cartService.addItem(this.theCoffee);
       this.userService.displayAlert(`${this.theCoffee.size} ${this.theCoffee.name}`, 'Added to cart')
       
+    } else{
+      this.userService.displayAlert('Cannot Add', 'You need to register an account first');
     }
     
   }
