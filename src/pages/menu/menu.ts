@@ -18,6 +18,8 @@ export class MenuPage implements OnInit{
 
   myCoffee: any[] = [];
 
+  detailPage: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -30,6 +32,7 @@ export class MenuPage implements OnInit{
   }
 
   ngOnInit() {
+    this.detailPage = 'MenuDetailPage';
     this.grabMenu();
   }
 
@@ -39,7 +42,7 @@ export class MenuPage implements OnInit{
   }
   
   chooseCafe(id) {
-    console.log(id);
+    this.navCtrl.push(this.detailPage, {id: id });
   }
 
 }
