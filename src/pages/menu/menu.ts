@@ -37,5 +37,9 @@ export class MenuPage implements OnInit{
     this.menuList.getCafeDB()
       .then( coffee => this.myCoffee = coffee);
   }
+  
+  chooseCafe(id) {
+    console.log(id);
+  }
 
 }
