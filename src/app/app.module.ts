@@ -18,6 +18,7 @@ import { MenuServiceProvider } from '../providers/menu-service/menu-service';
 import { CartServiceProvider } from '../providers/cart-service/cart-service';
 
 //import { FCM } from '@ionic-native/fcm';
+import { PayPal } from '@ionic-native/paypal';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCWhlZGS5W1UuC6VV0mQzQJeYqYugfE4FE",
@@ -54,7 +55,8 @@ export const firebaseConfig = {
     UserServiceProvider,
     RewardServiceProvider,
     MenuServiceProvider,
-    CartServiceProvider
+    CartServiceProvider,
+    PayPal
   ]
 })
 export class AppModule {}

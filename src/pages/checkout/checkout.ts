@@ -3,12 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CartServiceProvider } from "../../providers/cart-service/cart-service";
 import { UserServiceProvider } from "../../providers/user-service/user-service";
 
-/**
- * Generated class for the CheckoutPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HomePage } from '../home/home';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
+
 
 @IonicPage()
 @Component({
@@ -32,7 +29,8 @@ export class CheckoutPage implements OnInit {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private cartService: CartServiceProvider,
-    private userService: UserServiceProvider
+    private userService: UserServiceProvider,
+    private payPal: PayPal
   ) {
   }
 
@@ -103,6 +101,50 @@ export class CheckoutPage implements OnInit {
   removeReward() {
     this.discountUsed = false;
     this.discount = '';
+  }
+
+  purchase() {
+    if (this.discountUsed) {
+      let tmpId = this.discount.rewardId;
+      let tmp = this.rewardsList.map(x => x.rewardId).indexOf(tmpId);
+      if ( tmp > -1 ) {
+        this.rewardsList.splice(tmp, 1);
+      }
+      this.userService.storageControl('set', `${this.customer}-rewards`)
+        .then(results => console.log('Saved', results));
+
+      this.payCart(this.discountTotal);
+      this.cartService.emptyCart();
+      this.userService.displayAlert('Thank you', `Your order for ${this.discountTotal} has been paid`);
+      this.navCtrl.push(HomePage);
+    } else {
+      this.payCart(this.orderTotal);
+      this.cartService.emptyCart();
+      this.userService.displayAlert('Thank you', `Your order for ${this.orderTotal} has been paid`);
+      this.navCtrl.push(HomePage);
+    }
+  }
+
+  payCart(amt){
+    this.payPal.init({
+      PayPalEnvironmentProduction: 'production ID goes here',
+      PayPalEnvironmentSandbox: 'AY4tat3CV1Pm9PTgGPNKTDN0n2kI2aEL1qaQiTXXU2YxAAPTLYhrhGaYKGKYFLfkTZaksPBEn85qfElW'
+    }).then(() => {
+        this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+      })).then(() => {
+        let payment = new PayPalPayment(amt , 'EUR', 'Description', 'sale');
+        this.payPal.renderSinglePaymentUI(payment).then((res) => {
+          console.log('Result from Paypal: ', res);
+        
+      },(err) => {
+        console.log('Error: ', err)
+      });
+    },(conf) => {
+        console.log('Configuration Error: ', conf)
+    });
+  },(init) => {
+      console.log('Init Error: ', init)
+  });
   }
 
 }

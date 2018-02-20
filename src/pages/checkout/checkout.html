@@ -36,10 +36,8 @@
     </ion-row>
     <div *ngIf="!orderTotal"><h1>No items added. Please go to the menu to order.</h1></div>
 
-    <ion-row *ngIf="!discountUsed" class="my-border">
-        <ion-col><h2>Total: {{orderTotal | currency:'USD':true}}</h2></ion-col>
-      </ion-row>
-    <!--<ion-grid>
+    
+    <ion-grid>
       <ion-row *ngIf="!discountUsed" class="my-border">
         <ion-col><h2>Total: {{orderTotal | currency:'USD':true}}</h2></ion-col>
       </ion-row>
@@ -83,7 +81,7 @@
        </ion-col>
     </ion-row>
 
-  </div>-->
+  </div>
   
 
 
