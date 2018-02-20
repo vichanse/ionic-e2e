@@ -140,4 +140,8 @@ export class UserServiceProvider {
       });
   }
 
+  returnUser() {
+    return Promise.resolve(this.user);
+  }
+
 }

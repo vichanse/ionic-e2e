@@ -21,6 +21,13 @@ export class CheckoutPage implements OnInit {
   orderTotal: number;
   customer: any;
 
+  rewardsDisplay: boolean;
+  discountUsed: boolean = false;
+  rewardsList: any[] = [];
+  discount: any;
+  discountAmount: number = 0;
+  discountTotal: number = 0;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -34,11 +41,12 @@ export class CheckoutPage implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.user = this.customer;
     this.cartService.getCart()
       .then(theCart => this.order = theCart)
       .then(cart => this.sumTotal(cart))
-      .then(sum => this.orderTotal = sum);
+      .then(sum => this.orderTotal = sum)
+      .then(cash => this.userService.returnUser())
+      .then(cust => this.loadRewards(cust));
   }
 
   sumTotal(order) {
@@ -46,9 +54,55 @@ export class CheckoutPage implements OnInit {
   }
 
   removeOne(itemId, itemPrice) {
-    this.cartService.removeItem(itemId, itemPrice);
-    this.sumTotal(this.order)
-      .then(sum => this.orderTotal = sum);
+    if (this.discountTotal != 0 ) {
+      let tmpTotal = this.discountTotal - itemPrice;
+      if ( tmpTotal <= 0 ) {
+        this.userService.displayAlert('Unable to apply', 'You cannot apply rewards that create a credit');
+        this.removeReward;
+      }
+    } else {
+      this.cartService.removeItem(itemId, itemPrice);
+      this.sumTotal(this.order)
+      .then(sum => this.orderTotal = sum)
+      .then(dis => this.discountTotal = dis - this.discount.amount);
+    }
+    
+  }
+
+  addRewards() {
+    this.rewardsDisplay = (this.rewardsDisplay) ? false : true;
+  }
+
+  loadRewards(user) {
+    this.userService.storageControl('get', `${user}-rewards`)
+     .then(returned => {
+       this.customer = user;
+
+       if (!returned) {
+         let tmpObj = {rewardId: 'No rewards generated', amount: 0};
+         this.rewardsList.push(tmpObj);
+       } else {
+         this.rewardsList = returned;
+       }
+     })
+  }
+
+  applyReward(reward) {
+    let tmpAmount = this.orderTotal - reward.amount;
+
+    if(tmpAmount <= 0) {
+      this.userService.displayAlert('Unable to apply', 'You cannot apply rewards that create a credit');
+    } else {
+      this.discount = reward;
+      this.discountAmount = reward.amount;
+      this.discountTotal = this.orderTotal - reward.amount;
+      this.discountUsed = true;
+    }
+  }
+
+  removeReward() {
+    this.discountUsed = false;
+    this.discount = '';
   }
 
 }
